@@ -1,0 +1,59 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+    <div class="container" role="main">
+      <div class="c2 c2-padding" id="mainPanel">
+        <div class="test-row-padding">
+         <h2>Add Item</h2>
+        </div>
+        <div class = 'test-row-padding'>
+
+        <form action="{{url_for('newCatalogItem', catalog_id=catalog_id)}}" method = 'post'>
+
+
+
+        <dl>
+
+        	<dt>Title</dt>
+
+        		<dd><input type ='text' size='30' name='name' required></dd>
+
+                <dt>Description</dt>
+
+                        <dd><textarea name = 'description' rows='5' cols='40'></textarea></dd>
+
+                <dt>Category</dt>
+
+
+
+
+
+                        <dd>
+      	                 <select name="category">
+                                {% for c in catalogs %}
+                                {% if c.id == catalog_id%}
+				 <option selected value="{{c.id}}">{{c.name}}</option>
+                                {% else %}
+                                 <option value="{{c.id}}">{{c.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                         </select>
+                        </dd>
+
+
+        </dl>
+
+
+
+
+
+        <input type='submit' value='Submit'>
+
+
+
+        </form>
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

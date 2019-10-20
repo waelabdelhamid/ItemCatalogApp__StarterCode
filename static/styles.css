@@ -1,0 +1,386 @@
+body {
+  margin: 0;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+dl,
+dt,
+dd { 
+  margin:0;
+  padding:1% 0;
+}
+
+.c1, .c2 {
+
+
+
+box-sizing:border-box;
+
+
+/*min-height: 1000px;*/
+min-width:150px;
+
+
+
+height: 100%;
+overflow-y:auto;
+} 
+
+.container, .top-row header div{
+
+
+
+box-sizing:border-box;
+
+
+
+min-width:150px;
+
+
+
+overflow-y:scroll;
+} 
+
+.container div, .top-row header div {
+  box-sizing: border-box;
+  /*min-height: 150px;*/
+  min-width: 150px;
+  /*overflow-y: scroll;*/
+}
+
+.top-row {
+  margin-top: 30px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.c1 {
+  /*color: #ddd;
+  background-color: #003476;*/
+  color: #003476;
+  background-color: white;
+}
+
+.c2 {
+  /*color: #ddd;
+  background-color: #0062d2;*/
+  color: #003476;
+}
+
+.c3 {
+  color: #333;
+  background-color: #b4d2f7;
+}
+
+.c4 {
+  color: #333;
+  background-color: #d5dfef;
+}
+
+.c5 {
+  color: #333;
+  background-color: #dfe1e5;
+}
+
+/*
+These are the flexbox styles. keep it for test.
+*/
+
+/*.box {
+  min-height: 150px;
+}*/
+
+.dark_blue {
+  /*background-color: #2A457A;*/
+  color: #7d97ad;
+}
+
+.white {
+  background-color: rgb(255, 255, 255);
+}
+
+.light_blue {
+  background-color: #099DD9;
+}
+
+.green {
+  background-color: #0C8542;
+}
+
+.red {
+  /*background-color: #EC1D3B;*/
+  background-color: #003476;
+}
+
+.orange {
+  background-color: #F79420;
+}
+
+.lime {
+  /*background-color: rgb(179, 210, 52);*/
+  background-color:#003476;
+}
+
+.seafoam {
+  /*background-color: rgb(77, 190, 161);*/
+  background-color: #003476;
+}
+
+      /* // [START ocanvas] */
+      html, body, .c1, .c2, .container {
+        height: 100%;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+      
+      .container, .top-row {
+        display: block;
+      }
+
+      .c1 {
+        position: absolute;
+        width: 250px;
+        height: 100%;
+        
+        /*
+          This is a trick to improve performance on newer versions of Chrome
+          #perfmatters
+        */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden; 
+
+        -webkit-transition: -webkit-transform 0.4s ease-out;
+        transition: transform 0.4s ease-out;
+        
+        /*z-index: 1;*/
+        z-index: 2;
+      }
+  
+      .c1 {
+        /*
+        Using translate3d as a trick to improve performance on older versions of Chrome
+        See: http://aerotwist.com/blog/on-translate3d-and-layer-creation-hacks/
+        #perfmatters
+        */
+        -webkit-transform: translate(-250px,0);
+        transform: translate(-250px,0);
+      }
+
+      .c2-padding {
+        padding: 0.75em 15px;
+      }
+
+      .c2 {
+        width: 100%;
+        /*position: absolute;*/
+        /*padding: 3.75em 15px;*/
+        /*padding: 0.75em 15px;*/
+      }
+      
+      
+
+      .c1.open {
+        -webkit-transform: translate(0,0);
+        transform: translate(0,0);
+      }
+
+      /* Button styling */
+      .menu-toggle {
+       display: inline-block;
+       position: absolute;
+       padding: .25em 15px;
+       line-height: 1em;
+       font-size: 2em;
+       color: #333;
+       text-decoration: none;
+       z-index: 1;
+      }
+      .menu-close {
+       display: inline-block;
+       padding: .25em 15px;
+       line-height: 1em;
+       font-size: 2em;
+       color: #333;
+       text-decoration: none;
+       position:absolute;
+      }
+
+      .top-row {
+       display: -webkit-flex;
+       display: flex;
+       -webkit-flex-flow: row nowrap;
+       flex-wrap: wrap;
+      }
+
+      .box {
+       width: 100%;
+      }
+
+      .seafoam {
+       text-align: center;
+       font-size: 12px;
+       line-height: 2em;
+      }
+      .red {
+       text-align: center;
+      }
+
+      .flash {
+       background-color: #98FB98;
+       text-decoration: none;
+
+      }
+
+      .flash li {
+       list-style-type: none;
+       text-align: center;
+
+      }
+      .catalog-list {
+       padding: 16px 55px;
+       color: #EC1D3B;
+       text-decoration: none;
+      }
+      .catalog-list:hover,
+      .catalog-list:focus {
+       background-color: #333;
+       text-decoration: underline;
+      }
+      .btn-height {
+      /*min-height: 20px !important;*/
+      padding:1.25em 50px 0px;
+      }
+      .btn-padding {
+       padding: 8px 0px 8px 0px;
+       margin: 0;
+      }
+      .btn {
+       color: #EC1D3B;
+       text-decoration: none;
+      }
+      /*.btn-black {
+       color: #000000;
+       text-decoration: none;
+      }*/
+      .btn:hover,
+      .btn:focus {
+       background-color: #333;
+       text-decoration: underline;
+      }
+      .item-list {
+       padding: 8px 55px;
+       color: #EC1D3B;
+       text-decoration: none;
+      }
+      .item-list:hover,
+      .item-list:focus {
+       /*background-color: #333;*/
+       text-decoration: underline;
+      }
+      .userinfo {
+       color: #aaaaaa;
+       font-style: italic;
+      }
+      .test-row-padding {
+       padding: 0px 8px 0px 8px;
+       margin: 0;
+      }
+      .test-row-top-list{
+      /*padding:3.75em 50px 0px;*/
+      padding:2.75em 50px 0px;
+      } 
+      .test-row{
+      padding:0.75em 50px 0px;
+      } 
+      /*.test-row-item{
+      padding:0.75em 50px 0px;
+      }*/
+      #new-catalog-item {
+       position: absolute;
+       background-color: white;
+       width: 300px;
+       z-index: 0;
+      }
+      .c2-test-row-top-list{
+        padding:3.75em 50px 0px;
+        } 
+      .new-color {
+        color: white;
+      }
+
+      @media (min-width: 500px) {
+        /* If the screen is wider then 500px, use Flexbox */
+        .container {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+        }
+        .c1 {
+          position: relative;
+          -webkit-transition: none 0s ease-out;
+          transition: none 0s ease-out;
+          -webkit-transform: translate(0,0);
+          transform: translate(0,0);
+          /*added by wael to just reset, need test*/
+          z-index: 1;
+        }
+        .c2 {
+          position: static;
+          padding: 0;
+        }
+        .menu-toggle {
+          display: none;
+        }
+        .menu-close {
+          display: none;
+        }
+        .seafoam {
+        width: 50%;
+        text-align: right;
+        font-size: 14px;
+        line-height: 2.50em;
+        }
+        .red {
+        width: 50%;
+        order: -1;
+        text-align: left;
+        }
+       .test-row-top-list{
+        padding:0em 0px 0px;
+        } 
+        .catalog-list {
+        padding: 16px;
+        }
+        .item-list {
+        padding: 8px;
+        }
+        .test-row{
+        padding:0em 0px 0px;
+        } 
+        .btn-height {
+         /*min-height: 20px !important;*/
+         padding:1.25em 8px 0px;
+         }
+         .c2-test-row-top-list{
+        padding:3.75em 8px 0px;
+        } 
+      }
+      
+      /* // [END ocanvas] */

@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+    <div class="container" role="main">
+      <div class="c2 c2-padding" id="mainPanel">
+        <div class="test-row-padding">
+         <h2>Delete Item</h2>
+        </div>
+        <div class = 'test-row-padding'>
+
+        <form action="{{url_for('deleteCatalogItem', catalog_id=catalog_id, item_id=item.id)}}" method = 'post'>
+
+
+
+        <dl>
+
+        	<dt>Are you sure you want to delete?</dt>
+
+
+        </dl>
+
+
+
+
+
+        <input type='submit' value='Submit'>
+
+
+
+        </form>
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

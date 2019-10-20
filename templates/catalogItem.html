@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+    <div class="container" role="main">
+      <div class="c2 c2-padding" id="mainPanel">
+        <div class="test-row-padding">
+         <h2>{{item.name}} <a class="btn" href="{{url_for('showCatalogItems', catalog_id=catalog_id)}}">
+	   <span class="userinfo">({{item.catalog.name}})</span>
+	  </a></h2>
+        </div>
+        <div class = 'test-row-padding'>
+
+
+
+
+        <dl>
+
+
+                <dt></dt>
+
+                        <dd><textarea disabled name = 'description' rows='5' cols='40'>Description: {{item.description}}</textarea></dd>
+
+        </dl>
+
+
+
+
+        {%if 'username' in session%}
+          <a class="btn" href="{{url_for('editCatalogItem', catalog_id=catalog_id, item_id=item.id)}}">
+	   Edit |
+	  </a>
+          <a class="btn" href="{{url_for('deleteCatalogItem', catalog_id=catalog_id, item_id=item.id)}}">
+	   Delete
+	  </a>
+        {% endif %}
+
+
+
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+    <div class="container" role="main">
+      <div class="c1" id="leftDrawer">
+       <a href="#"
+        id="main-menu-close"
+        class="menu-close"
+        aria-label="Close main menu">
+        <span class="fa fa-close" aria-hidden="true"></span>
+       </a>
+       <div class="test-row-top-list">
+        <h2>Categories</h2>
+       </div>
+       {% for c in catalogs %}
+		<a href = "{{url_for('showCatalogItems', catalog_id = c.id)}}">
+			<div class="catalog-list">
+				<h3>{{c.name}}</h3>
+			</div>
+		</a>
+	{% endfor %}
+       <div class="test-row">
+        <h2>APIs</h2>
+       </div>
+	<a href = "{{url_for('catalogsJSON')}}">
+		<div class="catalog-list">
+			<h3>Categoriy</h3>
+		</div>
+	</a>
+      </div>
+      <div class="c2" id="mainPanel">
+        <a href="#"
+         id="main-menu-toggle"
+         class="menu-toggle"
+         aria-label="Open main menu">
+        <span class="fa fa-bars" aria-hidden="true"></span>
+      </a>
+        {%if 'username' in session%}
+          <a href="{{url_for('newCatalogItem', catalog_id=catalog.id)}}">
+	   <div class="btn btn-height" id="new-catalog-item">
+	    Add Item
+	   </div>
+	  </a>
+        <div class="c2-test-row-top-list">
+         {%if count_items > 1%}
+           <h2>{{catalog.name}} Items ({{count_items}} items)</h2>
+         {% else %}
+           <h2>{{catalog.name}} Items ({{count_items}} item)</h2>
+         {% endif %}
+        </div>
+        {% else %}
+        <div class="test-row-top-list">
+         {%if count_items > 1%}
+           <h2>{{catalog.name}} Items ({{count_items}} items)</h2>
+         {% else %}
+           <h2>{{catalog.name}} Items ({{count_items}} item)</h2>
+         {% endif %}
+        </div>
+        {% endif %}
+        {% for item in items %}
+	 	<a href = "{{url_for('showCatalogItem', catalog_id = item.catalog.id, item_id = item.id)}}">
+	 		<div class="item-list">
+	 			<h3>{{item.name}}</h3>
+	 		</div>
+	 	</a>
+	{% endfor %}
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var position = 0;
+      var mainPanel = document.getElementById("mainPanel");
+      var leftDrawer = document.getElementById("leftDrawer");
+      var leftMenu = document.getElementById("main-menu-toggle");
+      var leftClose = document.getElementById("main-menu-close");
+
+      function toggle(evt) {
+        position++;
+        if (position % 2 == 0) {
+          leftDrawer.classList.remove("open");
+        } else if (position % 2 == 1) {
+          leftDrawer.classList.add("open");
+        } else {
+          leftDrawer.classList.remove("open");
+        }
+      }
+
+      /*mainPanel.addEventListener("click", toggle);
+      leftDrawer.addEventListener("click", toggle); */
+      leftMenu.addEventListener('click',
+       function(e){
+       leftDrawer.classList.add("open");
+       e.stopPropagation();
+      });
+      leftClose.addEventListener('click',
+       function(e){
+       leftDrawer.classList.remove("open");
+       e.stopPropagation();
+      });
+
+    </script>
+    <script src="https://use.fontawesome.com/facf9fa52c.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% endblock %}

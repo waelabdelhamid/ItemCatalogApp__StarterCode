@@ -1,0 +1,35 @@
+
+<header class="top-row">
+      <div class="box red">
+        <a class="btn-black" href = "{{url_for('showCatalogs')}}">
+          <h1 class="new-color">Catalog App</h1>
+        </a>
+      </div>
+      <div class="box seafoam">
+        <!--p>Login Link will go Here </p-->
+        {%if 'username' not in session%}
+		<a class="new-color" href="{{url_for('showLogin')}}">Click here to Log in</a>
+		{% else %}
+                <a class="new-color" href="{{url_for('get_auth_token')}}">
+	         Your APIs Token |
+	        </a>
+		<a class="new-color" href="{{url_for('disconnect')}}">Disconnect</a>
+		{% endif %}
+      </div>
+      <div class="box lime">
+        <hr class="line">
+      </div>
+      <div class = 'box flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+      </div>
+</header>
