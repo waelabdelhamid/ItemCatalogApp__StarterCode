@@ -62,7 +62,8 @@ Made in Python 2.7 using Flask web development framework, and Html & CSS utilize
 1. Download the files from GitHub.
 2. To start the Catalog App web server Using the terminal, CD to the project folder, then type `python3 application.py`, or on Windows by typing `python application.py`
 3. Visit this URL http://localhost:8000/ to see the Catalog App web page.
-4. To stop the Catalog App web server, press [ctrl+c] from the terminal.
+4. Please notes: `make APIs requests` needs a basic Http Authentication, so after login, the `Your APIs Token` link will appear in the page header, click on the link copy the token and use it as a username without password when the API Authentication required.
+5. To stop the Catalog App web server, press [ctrl+c] from the terminal.
 
 ## Troubleshooting
 
