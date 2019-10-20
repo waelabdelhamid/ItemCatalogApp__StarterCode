@@ -6,7 +6,8 @@ from passlib.apps import custom_app_context as pwd_context
 import random
 import string
 from itsdangerous import(
-    TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+    TimedJSONWebSignatureSerializer as Serializer, BadSignature,
+    SignatureExpired)
 import datetime
 
 Base = declarative_base()
@@ -60,7 +61,8 @@ class Catalog(Base):
     user = relationship(User)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    # We added this serialize function to be able to send JSON objects in a serializable format
+    # We added this serialize function to be able to send JSON objects in
+    # a serializable format
     @property
     def serialize(self):
 
@@ -81,7 +83,8 @@ class CatalogItem(Base):
     user = relationship(User)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    # We added this serialize function to be able to send JSON objects in a serializable format
+    # We added this serialize function to be able to send JSON objects in
+    # a serializable format
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
