@@ -335,6 +335,9 @@ def get_auth_token():
 
 
 # JSON APIs to view Catalog Information
+
+
+# List of all catalogs
 @app.route('/catalog/JSON')
 @auth.login_required
 def catalogsJSON():
@@ -358,6 +361,23 @@ def catalogsJSON():
         temp.update(item)
         memory.append(temp)
     return jsonify(Category=memory)
+
+
+# List the catalog items of a specific catalog
+@app.route('/catalog/<int:catalog_id>/items/JSON')
+@auth.login_required
+def catalogItemsJSON(catalog_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    items = session.query(CatalogItem).filter_by(catalog_id=catalog_id).all()
+    return jsonify(CategoryItems=[i.serialize for i in items])
+
+
+# And a specific catalog item
+@app.route('/catalog/<int:catalog_id>/items/<int:item_id>/JSON')
+@auth.login_required
+def catalogItemJSON(catalog_id, item_id):
+    Catalog_Item = session.query(CatalogItem).filter_by(id=item_id).one()
+    return jsonify(Category_Item=Catalog_Item.serialize)
 
 
 # Show all catalogs
