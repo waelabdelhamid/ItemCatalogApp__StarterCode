@@ -367,7 +367,6 @@ def catalogsJSON():
 @app.route('/catalog/<int:catalog_id>/items/JSON')
 @auth.login_required
 def catalogItemsJSON(catalog_id):
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     items = session.query(CatalogItem).filter_by(catalog_id=catalog_id).all()
     return jsonify(CategoryItems=[i.serialize for i in items])
 
@@ -376,8 +375,11 @@ def catalogItemsJSON(catalog_id):
 @app.route('/catalog/<int:catalog_id>/items/<int:item_id>/JSON')
 @auth.login_required
 def catalogItemJSON(catalog_id, item_id):
-    Catalog_Item = session.query(CatalogItem).filter_by(id=item_id).one()
-    return jsonify(Category_Item=Catalog_Item.serialize)
+    Catalog_Item = session.query(CatalogItem).filter_by(id=item_id).first()
+    if Catalog_Item:
+        return jsonify(Category_Item=Catalog_Item.serialize)
+    else:
+        return jsonify(Category_Item={})
 
 
 # Show all catalogs
