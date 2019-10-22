@@ -391,16 +391,24 @@ def showCatalogs():
         desc(CatalogItem.created_at))
     # for i in lastItems:
     #    i.user=session.query(User).filter_by(id=i.user_id).one()
+    # Change the None value for catalog_id to 0 because giving runtime err in url_for
     catalog = catalogs.first()
     if catalog:
         catalog_id = catalog.id
     else:
-        catalog_id = None
+        catalog_id = 0
+    # Get the first item of the first catalog if found to use with sample APIs
+    item = session.query(CatalogItem).filter_by(catalog_id=catalog_id).first()
+    if item:
+        item_id = item.id
+    else:
+        item_id = 0
     return render_template(
         'catalogs.html',
         catalogs=catalogs,
         items=lastItems,
-        catalog_id=catalog_id)
+        catalog_id=catalog_id,
+        item_id=item_id)
 
 
 # Show a catalog items
@@ -411,12 +419,19 @@ def showCatalogItems(catalog_id):
     catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     items = session.query(CatalogItem).filter_by(catalog_id=catalog_id).all()
     count_items = len(items)
+    # Get the first item of the current catalog if found to use with sample APIs
+    item = session.query(CatalogItem).filter_by(catalog_id=catalog_id).first()
+    if item:
+        item_id = item.id
+    else:
+        item_id = 0
     return render_template(
         'catalogItems.html',
         catalogs=catalogs,
         items=items,
         catalog=catalog,
-        count_items=count_items)
+        count_items=count_items,
+        item_id=item_id)
 
 
 # Create a new catalog item
