@@ -1,4 +1,4 @@
-# !/usr/bin/env python3
+#!/usr/bin/python
 #
 # "Server code" for the Catalog App Web Application.
 
