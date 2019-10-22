@@ -20,11 +20,21 @@
 		</a>
 	{% endfor %}
        <div class="test-row">
-        <h2>APIs</h2>
+        <h2>Sample APIs</h2>
        </div>
 	<a href = "{{url_for('catalogsJSON')}}">
 		<div class="catalog-list">
-			<h3>Categoriy</h3>
+			<h3>Category</h3>
+		</div>
+	</a>
+        <a href = "{{url_for('catalogItemsJSON', catalog_id=catalog_id)}}">
+		<div class="catalog-list">
+                        <h3>CategoryItems <span class="userinfo">ID {{catalog_id}}</span></h3>
+		</div>
+	</a>
+        <a href = "{{url_for('catalogItemJSON', catalog_id=catalog_id, item_id=item_id)}}">
+		<div class="catalog-list">
+                        <h3>Category_Item <span class="userinfo">ID {{item_id}}</span></h3>
 		</div>
 	</a>
       </div>

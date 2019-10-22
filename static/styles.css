@@ -253,9 +253,10 @@ These are the flexbox styles. keep it for test.
 
       }
       .catalog-list {
-       padding: 16px 55px;
+       padding: 10px 55px;
        color: #EC1D3B;
        text-decoration: none;
+       font-size: 12px;
       }
       .catalog-list:hover,
       .catalog-list:focus {
@@ -366,7 +367,8 @@ These are the flexbox styles. keep it for test.
         padding:0em 0px 0px;
         } 
         .catalog-list {
-        padding: 16px;
+        padding: 10px;
+        font-size: 16px;
         }
         .item-list {
         padding: 8px;
