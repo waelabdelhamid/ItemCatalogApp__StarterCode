@@ -91,34 +91,35 @@ def fbconnect():
            'grant_type=fb_exchange_token&client_id=%s&client_secret='
            '%s&fb_exchange_token=%s') % (
         app_id, app_secret, access_token)
-    #print 'the exchange url:%s'%url
+    # print 'the exchange url:%s'%url
     h = httplib2.Http()
     # result = h.request(url, 'GET')[1]  #after try i found it returns json, i
     # found another solution in github project
-    #result = json.loads(h.request(url, 'GET')[1])
+    # result = json.loads(h.request(url, 'GET')[1])
     result = h.request(url, 'GET')[1]
 
     # Use token to get user info from API
     # nb:This API call has been officially deprecated by Facebook
-    # as of March 25th, 2017. Requests made to that version will no longer work.
-    # Please use the most current version of the Facebook API which shown below
-    # in the next code block.
+    # as of March 25th, 2017. Requests made to that version will no
+    # longer work.
+    # Please use the most current version of the Facebook API which shown
+    # below in the next code block.
     userinfo_url = "https://graph.facebook.com/v2.2/me"
-    # strip expire tag from access token.
-    # nb:This token includes an expires field that indicates how long this token
+    # strip expire tag from access token. nb:
+    # This token includes an expires field that indicates how long this token
     # is valid. Long term tokens can last up to two months. I'm going to strip
     # the expires tag from my token since i don't need it to make API calls.
     # token = result.split("&")[0]  #after try i found it returns json, i
     # found another solution in github project
-    #token = result['access_token']
+    # token = result['access_token']
     token = result.split(',')[0].split(':')[1].replace('"', '')
 
     url = ('https://graph.facebook.com/v2.8/me?access_token=%s&fields='
            'name,id,email') % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    #print "url sent for API access:%s"% url
-    #print "API JSON result: %s" % result
+    # print "url sent for API access:%s"% url
+    # print "API JSON result: %s" % result
     data = json.loads(result)
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
@@ -136,8 +137,8 @@ def fbconnect():
            'redirect=0&height=200&width=200') % login_session['facebook_id']
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    #print "url sent for API access for picture:%s"% url
-    #print "API JSON for picture result: %s" % result
+    # print "url sent for API access for picture:%s"% url
+    # print "API JSON for picture result: %s" % result
     data = json.loads(result)
 
     login_session['picture'] = data["data"]["url"]
@@ -159,7 +160,7 @@ def fbconnect():
                '150px;-webkit-border-radius: 150px;-moz-border-radius: '
                '150px;"> ')
     flash("you are now logged in as %s" % login_session['username'])
-    #print "done!"
+    # print "done!"
     return output
 
 
@@ -173,14 +174,14 @@ def fbdisconnect():
         facebook_id, access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
-    #print 'url of API call for fb log out result %s' % url
-    #print 'The API call for fb log out result %s' % result
+    # print 'url of API call for fb log out result %s' % url
+    # print 'The API call for fb log out result %s' % result
     return "you have been logged out"
 
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
-    #print "call gconnect ok: %s" %request.args.get['state']
+    # print "call gconnect ok: %s" %request.args.get['state']
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter'), 401)
         response.headers['Content-Type'] = 'application/json'
@@ -219,7 +220,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(json.dumps(
             "Token's Client ID does not match app's"), 401)
-        #print "Token's Client ID does not match app's"
+        # print "Token's Client ID does not match app's"
         response.headers['Content-Type'] = 'application/json'
         return response
     # Check to see if the user is already logged in
@@ -264,7 +265,7 @@ def gconnect():
                '150px;-webkit-border-radius: 150px;-moz-border-radius: '
                '150px;"> ')
     flash("you are now logged in as %s" % login_session['username'])
-    #print "done!"
+    # print "done!"
     return output
 
 # User Helper Functions
@@ -344,19 +345,12 @@ def catalogsJSON():
     memory = []
 
     catalogs = session.query(Catalog).order_by(asc(Catalog.name)).all()
-    # return jsonify(Categories=[c.serialize.update(dict(Item=[i.serialize for
-    # i in session.query(CatalogItem).filter_by(catalog_id=c.id).all()])) for
-    # c in catalogs]) # it is same as below but the problem is c.serialize not
-    # stores data, everytime bring the same serialize from the catalog class
     for c in catalogs:
         temp = c.serialize
-        # memory.append(temp.update(dict(Item= [i.serialize for i in
-        # session.query(CatalogItem).filter_by(catalog_id=c.id).all()]))) # it
-        # is same as below but the problem is temp.update returns None
+
         items = [i.serialize for i in session.query(
             CatalogItem).filter_by(catalog_id=c.id).all()]
-        # item=dict({'Item': items}) # it is same as below
-        # item={'Item': items} # it is same as below
+
         item = dict(Item=items)
         temp.update(item)
         memory.append(temp)
@@ -389,9 +383,9 @@ def showCatalogs():
     catalogs = session.query(Catalog).order_by(asc(Catalog.name))
     lastItems = session.query(CatalogItem).order_by(
         desc(CatalogItem.created_at))
-    # for i in lastItems:
-    #    i.user=session.query(User).filter_by(id=i.user_id).one()
-    # Change the None value for catalog_id to 0 because giving runtime err in url_for
+
+    # Change the None value for catalog_id to 0 because giving runtime
+    # err in url_for
     catalog = catalogs.first()
     if catalog:
         catalog_id = catalog.id
@@ -419,7 +413,8 @@ def showCatalogItems(catalog_id):
     catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     items = session.query(CatalogItem).filter_by(catalog_id=catalog_id).all()
     count_items = len(items)
-    # Get the first item of the current catalog if found to use with sample APIs
+    # Get the first item of the current catalog if found to use with
+    # sample APIs
     item = session.query(CatalogItem).filter_by(catalog_id=catalog_id).first()
     if item:
         item_id = item.id
@@ -472,15 +467,6 @@ def editCatalogItem(catalog_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     if editedItem.user_id != login_session['user_id']:
-        # remove set time out and redirect to prevent navigation problem
-        # return ("<script>function myFunction() {alert("
-        #  "'You are not authorized to edit this Catalog Item. "
-        #  "Please create your own Catalog Item in order to edit.'); "
-        #  "setTimeout(function() {"
-        #  "window.location.href = '"+url_for('showCatalogItem', catalog_id="
-        #  "catalog_id, item_id=item_id)+"';"
-        #  "}, 1000);}"
-        #  "</script><body onload= 'myFunction()''>")
         return ("<script>function myFunction() {alert('You are not authorized "
                 "to edit this Catalog Item. "
                 "Please create your own Catalog Item "
@@ -522,19 +508,11 @@ def deleteCatalogItem(catalog_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     if itemToDelete.user_id != login_session['user_id']:
-        # remove set time out and redirect to prevent navigation problem
-        # return ("<script>function myFunction() {alert("
-        #"'You are not authorized to delete this Catalog Item. "
-        #"Please create your own Catalog Item in order to delete.'); "
-        #  "setTimeout(function() {"
-        #  "window.location.href = '"+url_for('showCatalogItem', catalog_id"
-        #  "=catalog_id, item_id=item_id)+"';"
-        # "}, 1000);}"
-        # "</script><body onload= 'myFunction()''>")
         return ("<script>function myFunction() {alert('You are not authorized "
                 "to delete this Catalog Item. "
                 "Please create your own Catalog Item "
-                "in order to delete.');}</script><body onload= 'myFunction()''>"
+                "in order to delete.');}</script>"
+                "<body onload= 'myFunction()''>"
                 "Unauthorized Access</body>")
     if request.method == 'POST':
         session.delete(itemToDelete)
@@ -585,5 +563,4 @@ def disconnect():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     port = int(os.environ.get('PORT', 8000))   # Use PORT if it's there.
-    #app.debug = True
     app.run(host='0.0.0.0', port=port)
