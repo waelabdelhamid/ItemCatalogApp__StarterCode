@@ -368,7 +368,6 @@ These are the flexbox styles. keep it for test.
         } 
         .catalog-list {
         padding: 10px;
-        font-size: 16px;
         }
         .item-list {
         padding: 8px;
@@ -385,4 +384,9 @@ These are the flexbox styles. keep it for test.
         } 
       }
       
+      @media screen and (min-width: 850px){
+        .catalog-list {
+          font-size: 16px;
+        }
+      }
       /* // [END ocanvas] */
