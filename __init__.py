@@ -23,14 +23,22 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 app = Flask(__name__)
 
 
+app.secret_key = 'super_secret_key'
+
+
 auth = HTTPBasicAuth()
+
+here=os.path.dirname(__file__)
+google_json_path=os.path.join(here, 'client_secrets.json')
+fb_json_path=os.path.join(here, 'fb_client_secrets.json')
 
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open(google_json_path, 'r').read())['web']['client_id']
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///catalogitems.db')
+# engine = create_engine('sqlite:///catalogitems.db')
+engine = create_engine("postgresql+psycopg2://catalog:ccatalog@localhost/catalog")
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -46,6 +54,7 @@ def remove_session(ex=None):
 @auth.verify_password
 def verify_password(username_or_token, password):
     # Try to see if it's a token first
+    # print username_or_token
     user_id = User.verify_auth_token(username_or_token)
     if user_id:
         user = session.query(User).filter_by(id=user_id).one()
@@ -84,9 +93,9 @@ def fbconnect():
     # client_secret=
     # {app-secret}&fb_exchange_token={short-lived-token}
     app_id = json.\
-        loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']
+        loads(open(fb_json_path, 'r').read())['web']['app_id']
     app_secret = json.\
-        loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+        loads(open(fb_json_path, 'r').read())['web']['app_secret']
     url = ('https://graph.facebook.com/oauth/access_token?'
            'grant_type=fb_exchange_token&client_id=%s&client_secret='
            '%s&fb_exchange_token=%s') % (
@@ -189,7 +198,7 @@ def gconnect():
     code = request.data
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json',
+        oauth_flow = flow_from_clientsecrets(google_json_path,
                                              scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)

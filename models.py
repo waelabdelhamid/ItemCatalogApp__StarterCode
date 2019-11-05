@@ -18,7 +18,7 @@ secret_key = ''.join(random.choice(
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'app_user'
     id = Column(Integer, primary_key=True)
     username = Column(String(32), index=True)
     picture = Column(String)
@@ -57,7 +57,7 @@ class Catalog(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('app_user.id'))
     user = relationship(User)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
@@ -79,7 +79,7 @@ class CatalogItem(Base):
     description = Column(String(250))
     catalog_id = Column(Integer, ForeignKey('catalog.id'))
     catalog = relationship(Catalog)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('app_user.id'))
     user = relationship(User)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
@@ -96,7 +96,8 @@ class CatalogItem(Base):
         }
 
 
-engine = create_engine('sqlite:///catalogitems.db')
+# engine = create_engine('sqlite:///catalogitems.db')
+engine = create_engine("postgresql+psycopg2://catalog:ccatalog@localhost/catalog")
 
 
 Base.metadata.create_all(engine)

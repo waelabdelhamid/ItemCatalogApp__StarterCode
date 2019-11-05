@@ -2,7 +2,8 @@ from models import Base, Catalog, CatalogItem, User
 from sqlalchemy import asc, create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///catalogitems.db')
+# engine = create_engine('sqlite:///catalogitems.db')
+engine = create_engine("postgresql+psycopg2://catalog:ccatalog@localhost/catalog")
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
