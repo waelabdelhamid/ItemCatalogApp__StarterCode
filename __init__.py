@@ -80,6 +80,11 @@ def showLogin():
     return render_template('login.html', STATE=state)
 
 
+@app.route('/privacy')
+def showPrivacy():
+    return render_template('privacy.html')
+
+
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     if request.args.get('state') != login_session['state']:

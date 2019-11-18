@@ -8,12 +8,18 @@
       <div class="box seafoam">
         <!--p>Login Link will go Here </p-->
         {%if 'username' not in session%}
-		<a class="new-color" href="{{url_for('showLogin')}}">Click here to Log in</a>
+		<a class="new-color" href="{{url_for('showLogin')}}">Click here to Log in |</a>
+              <a class="new-color" href="{{url_for('showPrivacy')}}">
+          Our Privacy Policy
+          </a>
 		{% else %}
                 <a class="new-color" href="{{url_for('get_auth_token')}}">
 	         Your APIs Token |
 	        </a>
-		<a class="new-color" href="{{url_for('disconnect')}}">Disconnect</a>
+		<a class="new-color" href="{{url_for('disconnect')}}">Disconnect |</a>
+              <a class="new-color" href="{{url_for('showPrivacy')}}">
+          Our Privacy Policy
+          </a>
 		{% endif %}
       </div>
       <div class="box lime">
